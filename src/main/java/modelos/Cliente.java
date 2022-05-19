@@ -23,10 +23,9 @@ public class Cliente {
 		private int telefono;
 		private String email;
 		
-		private List<CuentaNacional> cuentasTitular = new ArrayList<>();
-
+		private List<Cuenta> cuentasTitulares = new ArrayList<>();
 		
-		private List<Cuenta> cuentasCoTitular = new ArrayList<>();
+		private List<Cuenta> cuentasCoTitulares = new ArrayList<>();
 		
 		public Cliente() {
 			super();
@@ -42,18 +41,80 @@ public class Cliente {
 			this.telefono = telefono;
 			this.email = email;
 		}
-
 		
-		public void AgregarCuentaTitular(CuentaNacional cuentaNacional) {
-			
-			this.cuentasTitular.add(cuentaNacional);
+		
+		public void agregarCuentaTitular(Cuenta cuenta) {
+			cuentasTitulares.add(cuenta);
 		}
 		
-
-
-		public List<CuentaNacional> getCuentasTitularNacionales() {
-			return cuentasTitular;
+		public void agregarCuentaCoTitular(Cuenta cuenta) {
+			cuentasCoTitulares.add(cuenta);
 		}
+		
+		
+		
+
+		public List<Cuenta> getCuentasTitulares() {
+			return cuentasTitulares;
+		}
+
+
+		public List<Cuenta> getCuentasCoTitulares() {
+			return cuentasCoTitulares;
+		}
+
+
+		public String getNombre() {
+			return nombre;
+		}
+
+
+		public void setNombre(String nombre) {
+			this.nombre = nombre;
+		}
+
+
+		public String getApellido() {
+			return apellido;
+		}
+
+
+		public void setApellido(String apellido) {
+			this.apellido = apellido;
+		}
+
+
+		public Direccion getDireccion() {
+			return direccion;
+		}
+
+
+		public void setDireccion(Direccion direccion) {
+			this.direccion = direccion;
+		}
+
+
+		public int getTelefono() {
+			return telefono;
+		}
+
+
+		public void setTelefono(int telefono) {
+			this.telefono = telefono;
+		}
+
+
+		public String getEmail() {
+			return email;
+		}
+
+
+		public void setEmail(String email) {
+			this.email = email;
+		}
+
+
+		
 
 		
 

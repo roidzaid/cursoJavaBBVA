@@ -10,6 +10,13 @@ import org.junit.Test;
 public class ClienteTest {
 
 	
+	private String nombre = "Leandro";
+	private String apellido = "Roidzaid";
+	private Direccion direccion = new Direccion();
+	private int telefono = 12345678;
+	private String email = "roidzaid@gmail.com";
+	
+	
 	private Cliente cliente;
 	private CuentaNacional cuentaNacional;
 	private CuentaExtranjera cuentaExtranjera;
@@ -18,25 +25,37 @@ public class ClienteTest {
 	@Before
 	public void crearCliente() {
 		
+		cliente = new Cliente(nombre, apellido, direccion, telefono, email);
+		
 		cuentaNacional = mock(CuentaNacional.class);
+		cuentaExtranjera = mock(CuentaExtranjera.class);
 		
 	}
 	
 	@Test
-	public void agregarCuentaTitular_ElClienteTieneUnaCuentaTitular() {
+	public void cliente_mantieneInformacionEsperada() {
 		
-		cliente.AgregarCuentaTitular(cuentaNacional);
-		
-		for(int i = 0; cliente.getCuentasTitularNacionales().size()<i; i++) {
-			CuentaNacional c = (CuentaNacional) cliente.getCuentasTitularNacionales().get(i);
-			
-			assertTrue(c.getClass().equals(cuentaNacional));
+		assertEquals(cliente.getNombre(), nombre);
+		assertEquals(cliente.getApellido(), apellido);
+		assertEquals(cliente.getDireccion(), direccion);
+		assertEquals(cliente.getTelefono(), telefono);
+		assertEquals(cliente.getEmail(), email);
 
-		}
+	}
+	
+	@Test
+	public void agregarCuentaTitularNacional_esTitularDeUnaCuentaNacional() {
+		
+		cliente.agregarCuentaTitular(cuentaNacional);
+		
+		assertTrue(cliente.getCuentasTitulares().size() > 0);
+		
+		assertTrue(cliente.getCuentasTitulares().get(0).getClass().equals(cuentaNacional.getClass()));
 		
 		
 	}
-
-	
-
+		
+		
 }
+
+

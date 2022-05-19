@@ -1,6 +1,9 @@
 package modelos;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
@@ -13,6 +16,8 @@ public class Cuenta {
 	private float descubierto;
 	private Date fechaCierre;
 	private Cliente titular;
+	private List<Cliente> coTitulares = new ArrayList<>();
+	private List<Movimiento> movimientos = new ArrayList<>();
 	
 	public Cuenta() {
 		super();
@@ -40,6 +45,30 @@ public class Cuenta {
 	public void setTitular(Cliente titular) {
 		this.titular = titular;
 	}
+
+
+	public List<Cliente> getcoTitulares() {
+		return coTitulares;
+	}
+
+
+	public void agregarcoTitulares(Cliente cliente) {
+		
+		coTitulares.add(cliente);
+	}
+
+
+	public List<Movimiento> getMovimientos() {
+		return movimientos;
+	}
+
+
+	public void agregarMovimiento(Movimiento movimiento) {
+		movimientos.add(movimiento);
+	}
+	
+	
+	
 
 
 	
