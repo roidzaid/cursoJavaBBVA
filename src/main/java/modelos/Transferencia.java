@@ -1,7 +1,8 @@
 package modelos;
 
-import java.util.Date;
+import javax.persistence.Entity;
 
+@Entity
 public class Transferencia extends Movimiento{
 	
 	private Long nroCuenta;
@@ -20,13 +21,6 @@ public class Transferencia extends Movimiento{
 		return nroCuenta;
 	}
 
-	public void setNroCuenta(Long nroCuenta) {
-		this.nroCuenta = nroCuenta;
-	}
-
-	
-	
-	
 	
 	
 

@@ -52,8 +52,23 @@ public class ClienteTest {
 		
 		assertTrue(cliente.getCuentasTitulares().get(0).getClass().equals(cuentaNacional.getClass()));
 		
+	}
+	
+	
+	@Test
+	public void agregarCuentasCoTitulares_esCoTitularDeCuentas() {
+		
+		cliente.agregarCuentaCoTitular(cuentaNacional);
+		cliente.agregarCuentaCoTitular(cuentaExtranjera);
+		
+		assertTrue(cliente.getCuentasCoTitulares().size() > 0);
+		
+		assertTrue(cliente.getCuentasCoTitulares().get(0).getClass().equals(cuentaNacional.getClass()));
+		assertTrue(cliente.getCuentasCoTitulares().get(1).getClass().equals(cuentaExtranjera.getClass()));
 		
 	}
+	
+	
 		
 		
 }

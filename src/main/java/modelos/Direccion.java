@@ -2,8 +2,9 @@ package modelos;
 
 import javax.persistence.Embeddable;
 
-//@Embeddable
+@Embeddable
 public class Direccion {
+	
 	
 	private String calle;
 	private int numeroCivico;

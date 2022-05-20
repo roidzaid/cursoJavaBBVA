@@ -1,13 +1,9 @@
 package modelos;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-
+import java.time.LocalDate;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
 
+@Entity
 public class CuentaExtranjera extends Cuenta{
 	
 	private String monedaAsociada;
@@ -17,12 +13,16 @@ public class CuentaExtranjera extends Cuenta{
 		// TODO Auto-generated constructor stub
 	}
 
-	
 
-	public CuentaExtranjera(String monedaAsociada) {
-		super();
+	
+	
+	public CuentaExtranjera(LocalDate fechaCreacion, float saldoInicial, float saldoActual, float descubierto,
+			LocalDate fechaCierre, String monedaAsociada) {
+		super(fechaCreacion, saldoInicial, saldoActual, descubierto, fechaCierre);
 		this.monedaAsociada = monedaAsociada;
+		// TODO Auto-generated constructor stub
 	}
+
 
 
 

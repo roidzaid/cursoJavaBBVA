@@ -1,5 +1,8 @@
 package modelos;
 
+import javax.persistence.Entity;
+
+@Entity
 public class CompraVentaMoneda extends Movimiento{
 
 	private float cotizacion;
@@ -20,18 +23,11 @@ public class CompraVentaMoneda extends Movimiento{
 		return cotizacion;
 	}
 
-	public void setCotizacion(float cotizacion) {
-		this.cotizacion = cotizacion;
-	}
 
 	public float getComision() {
 		return comision;
 	}
 
-	public void setComision(float comision) {
-		this.comision = comision;
-	}
-	
 	
 	
 	

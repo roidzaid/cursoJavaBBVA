@@ -1,22 +1,45 @@
 package modelos;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToMany;
+import javax.validation.constraints.NotEmpty;
 
+@MappedSuperclass
 public class Cuenta {
 	
+	@Id @GeneratedValue
+	private long id;
+	
+	@NotEmpty (message = "{cuenta.nro}")
 	private Long Nro;
-	private Date fechaCreacion;
+
+	@NotEmpty (message = "{cuenta.fecha.creacion}")
+	private LocalDate fechaCreacion;
+	
+	@NotEmpty (message = "{cuenta.saldo.inicial}")
 	private float saldoInicial;
+	
+	@NotEmpty (message = "{cuenta.saldo.actual}")
 	private float saldoActual;
+	
+	@NotEmpty (message = "{cuenta.descubierto}")
 	private float descubierto;
-	private Date fechaCierre;
+	
+	private LocalDate fechaCierre;
+	
 	private Cliente titular;
+	
+	@ManyToMany
 	private List<Cliente> coTitulares = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "cuenta-movimientos")
 	private List<Movimiento> movimientos = new ArrayList<>();
 	
 	public Cuenta() {
@@ -25,10 +48,9 @@ public class Cuenta {
 	}
 
 	
-	public Cuenta(Long nro, Date fechaCreacion, float saldoInicial, float saldoActual, float descubierto,
-			Date fechaCierre) {
+	public Cuenta(LocalDate fechaCreacion, float saldoInicial, float saldoActual, float descubierto,
+			LocalDate fechaCierre) {
 		super();
-		Nro = nro;
 		this.fechaCreacion = fechaCreacion;
 		this.saldoInicial = saldoInicial;
 		this.saldoActual = saldoActual;
@@ -41,16 +63,9 @@ public class Cuenta {
 		return titular;
 	}
 
-
-	public void setTitular(Cliente titular) {
-		this.titular = titular;
-	}
-
-
 	public List<Cliente> getcoTitulares() {
 		return coTitulares;
 	}
-
 
 	public void agregarcoTitulares(Cliente cliente) {
 		
@@ -62,9 +77,54 @@ public class Cuenta {
 		return movimientos;
 	}
 
-
 	public void agregarMovimiento(Movimiento movimiento) {
 		movimientos.add(movimiento);
+	}
+
+
+	public Long getNro() {
+		return Nro;
+	}
+
+
+	
+	public LocalDate getFechaCreacion() {
+		return fechaCreacion;
+	}
+
+
+	public float getSaldoInicial() {
+		return saldoInicial;
+	}
+
+
+	public float getDescubierto() {
+		return descubierto;
+	}
+
+
+	public void setDescubierto(float descubierto) {
+		this.descubierto = descubierto;
+	}
+
+
+	public LocalDate getFechaCierre() {
+		return fechaCierre;
+	}
+
+
+	public void setFechaCierre(LocalDate fechaCierre) {
+		this.fechaCierre = fechaCierre;
+	}
+
+
+	public float getSaldoActual() {
+		return saldoActual;
+	}
+
+
+	public void setSaldoActual(float saldoActual) {
+		this.saldoActual = saldoActual;
 	}
 	
 	
