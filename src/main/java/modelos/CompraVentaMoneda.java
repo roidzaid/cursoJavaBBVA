@@ -2,6 +2,7 @@ package modelos;
 
 import javax.persistence.Entity;
 
+@SuppressWarnings("serial")
 @Entity
 public class CompraVentaMoneda extends Movimiento{
 

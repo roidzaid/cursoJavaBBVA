@@ -1,16 +1,23 @@
 package modelos;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
+
 @Entity
+@Table(name = "CLIENTES")
 public class Cliente {
 	
 	@Id	@GeneratedValue
@@ -30,11 +37,11 @@ public class Cliente {
 	@Email
 	private String email;
 	
-	@OneToMany(mappedBy = "titular-cuentas")
-	private List<Cuenta> cuentasTitulares = new ArrayList<>();
+	@OneToMany(mappedBy = "titular")
+	private List<Cuenta> cuenta_titular = new ArrayList<>();
 	
-	@ManyToMany(mappedBy = "cotitulares-cuentas")
-	private List<Cuenta> cuentasCoTitulares = new ArrayList<>();
+	@ManyToMany(mappedBy = "coTitulares")
+	private Set<Cuenta> cuenta_coTitulares  = new HashSet<>();
 	
 	public Cliente() {
 		super();
@@ -53,23 +60,19 @@ public class Cliente {
 	
 	
 	public void agregarCuentaTitular(Cuenta cuenta) {
-		cuentasTitulares.add(cuenta);
+		cuenta_titular.add(cuenta);
 	}
 	
 	public void agregarCuentaCoTitular(Cuenta cuenta) {
-		cuentasCoTitulares.add(cuenta);
+		cuenta_coTitulares.add(cuenta);
 	}
-	
-	
-	
 
 	public List<Cuenta> getCuentasTitulares() {
-		return cuentasTitulares;
+		return cuenta_titular;
 	}
 
-
-	public List<Cuenta> getCuentasCoTitulares() {
-		return cuentasCoTitulares;
+	public Set<Cuenta> getCuentasCoTitulares() {
+		return cuenta_coTitulares;
 	}
 
 

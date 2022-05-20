@@ -1,8 +1,10 @@
 package modelos;
 
 import java.time.LocalDate;
+
 import javax.persistence.Entity;
 
+@SuppressWarnings("serial")
 @Entity
 public class CuentaNacional extends Cuenta{
 

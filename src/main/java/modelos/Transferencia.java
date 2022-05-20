@@ -1,10 +1,13 @@
 package modelos;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 
+@SuppressWarnings("serial")
 @Entity
 public class Transferencia extends Movimiento{
 	
+	@Column(name="nro_cuenta")
 	private Long nroCuenta;
 
 	public Transferencia() {

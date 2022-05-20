@@ -2,45 +2,60 @@ package modelos;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
-@MappedSuperclass
-public class Cuenta {
+@SuppressWarnings("serial")
+@Entity
+@Table(name = "CUENTAS")
+public abstract class Cuenta implements java.io.Serializable{
 	
 	@Id @GeneratedValue
 	private long id;
 	
 	@NotEmpty (message = "{cuenta.nro}")
+	@Column(name="nro_cuenta")
 	private Long Nro;
 
 	@NotEmpty (message = "{cuenta.fecha.creacion}")
+	@Column(name="fecha_creacion")
 	private LocalDate fechaCreacion;
 	
 	@NotEmpty (message = "{cuenta.saldo.inicial}")
+	@Column(name="saldo_inicial")
 	private float saldoInicial;
 	
 	@NotEmpty (message = "{cuenta.saldo.actual}")
+	@Column(name="saldo_actual")
 	private float saldoActual;
 	
 	@NotEmpty (message = "{cuenta.descubierto}")
+	@Column(name="descubierto")
 	private float descubierto;
 	
+	@Column(name="fecha_cierre")
 	private LocalDate fechaCierre;
 	
+	@ManyToOne
 	private Cliente titular;
 	
 	@ManyToMany
-	private List<Cliente> coTitulares = new ArrayList<>();
+	private Set<Cliente> coTitulares = new HashSet<>();
 	
-	@OneToMany(mappedBy = "cuenta-movimientos")
+	@OneToMany(mappedBy = "cuenta")
 	private List<Movimiento> movimientos = new ArrayList<>();
+	
 	
 	public Cuenta() {
 		super();
@@ -63,22 +78,16 @@ public class Cuenta {
 		return titular;
 	}
 
-	public List<Cliente> getcoTitulares() {
+	
+
+	public Set<Cliente> getCoTitulares() {
 		return coTitulares;
 	}
+
 
 	public void agregarcoTitulares(Cliente cliente) {
 		
 		coTitulares.add(cliente);
-	}
-
-
-	public List<Movimiento> getMovimientos() {
-		return movimientos;
-	}
-
-	public void agregarMovimiento(Movimiento movimiento) {
-		movimientos.add(movimiento);
 	}
 
 

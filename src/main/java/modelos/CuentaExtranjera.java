@@ -1,11 +1,15 @@
 package modelos;
 
 import java.time.LocalDate;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 
+@SuppressWarnings("serial")
 @Entity
 public class CuentaExtranjera extends Cuenta{
 	
+	@Column(name="moneda")
 	private String monedaAsociada;
 
 	public CuentaExtranjera() {
