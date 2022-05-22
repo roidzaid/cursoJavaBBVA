@@ -1,9 +1,10 @@
 package modelos;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
-@SuppressWarnings("serial")
 @Entity
+@Table(name = "COMPRA_VENTA_MONEDA")
 public class CompraVentaMoneda extends Movimiento{
 
 	private float cotizacion;

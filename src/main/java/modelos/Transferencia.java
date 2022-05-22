@@ -2,27 +2,29 @@ package modelos;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
-@SuppressWarnings("serial")
 @Entity
+@Table(name = "TRANSFERENCIAS")
 public class Transferencia extends Movimiento{
 	
 	@Column(name="nro_cuenta")
-	private Long nroCuenta;
+	@ManyToOne
+	private Cuenta cuenta;
 
+	
 	public Transferencia() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Transferencia(Long nroCuenta) {
+	public Transferencia(Cuenta cuenta) {
 		super();
-		this.nroCuenta = nroCuenta;
+		this.cuenta = cuenta;
 	}
 
-	public Long getNroCuenta() {
-		return nroCuenta;
-	}
+	
 
 	
 	

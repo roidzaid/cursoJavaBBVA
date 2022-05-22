@@ -6,15 +6,18 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-@SuppressWarnings("serial")
 @Entity
 @Table(name = "MOVIMIENTOS")
-public abstract class Movimiento implements java.io.Serializable{
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class Movimiento{
 
 	@Id @GeneratedValue
+	@Column(name="id_movimiento")
 	private long id;
 	
 	@Column(name="fecha_hora")

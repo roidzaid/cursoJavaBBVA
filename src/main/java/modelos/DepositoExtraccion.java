@@ -1,9 +1,10 @@
 package modelos;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
-@SuppressWarnings("serial")
 @Entity
+@Table(name = "DEPOSITO_EXTRACCION")
 public class DepositoExtraccion extends Movimiento{
 	
 	private String caja;

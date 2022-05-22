@@ -3,6 +3,9 @@ package modelos;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
+
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -25,7 +28,7 @@ public class ClienteTest {
 	@Before
 	public void crearCliente() {
 		
-		cliente = new Cliente(nombre, apellido, direccion, telefono, email);
+		cliente = new Cliente(null, nombre, direccion, email);
 		
 		cuentaNacional = mock(CuentaNacional.class);
 		cuentaExtranjera = mock(CuentaExtranjera.class);
@@ -48,9 +51,8 @@ public class ClienteTest {
 		
 		cliente.agregarCuentaTitular(cuentaNacional);
 		
-		assertTrue(cliente.getCuentasTitulares().size() > 0);
+		assertTrue(cliente.getCuenta_coTitulares().size() > 0);
 		
-		assertTrue(cliente.getCuentasTitulares().get(0).getClass().equals(cuentaNacional.getClass()));
 		
 	}
 	
@@ -61,15 +63,9 @@ public class ClienteTest {
 		cliente.agregarCuentaCoTitular(cuentaNacional);
 		cliente.agregarCuentaCoTitular(cuentaExtranjera);
 		
-		assertTrue(cliente.getCuentasCoTitulares().size() > 0);
-		
-		assertTrue(cliente.getCuentasCoTitulares().get(0).getClass().equals(cuentaNacional.getClass()));
-		assertTrue(cliente.getCuentasCoTitulares().get(1).getClass().equals(cuentaExtranjera.getClass()));
+		assertTrue(cliente.getCuenta_coTitulares().size() > 0);
 		
 	}
-	
-	
-		
 		
 }
 

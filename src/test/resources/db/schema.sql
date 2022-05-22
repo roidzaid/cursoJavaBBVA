@@ -1,0 +1,2 @@
+DROP TABLE Artista IF EXISTS;
+CREATE TABLE IF NOT EXISTS Artista (Id BIGINT auto_increment, Nombre VARCHAR(25),Apellido VARCHAR(25),FechaNacimiento DATE,Bio VARCHAR(2000),Email VARCHAR(100),PRIMARY KEY (Id));

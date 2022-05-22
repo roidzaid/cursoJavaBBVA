@@ -29,8 +29,8 @@ public class CuentaTest {
 	@Before
 	public void crearCuenta() {
 		
-		cuentaNacional = new CuentaNacional(fechaCreacion, saldoInicial, saldoActual, descubierto, fechaCierre);
-		cuentaExtranjera = new CuentaExtranjera(fechaCreacion, saldoInicial, saldoActual, descubierto, fechaCierre, monedaAsociada);
+		cuentaNacional = new CuentaNacional();
+		cuentaExtranjera = new CuentaExtranjera(monedaAsociada);
 		
 		cliente = mock(Cliente.class);
 		transferencia = mock(Transferencia.class);
