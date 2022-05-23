@@ -24,7 +24,7 @@
 
 	<bean id="emf"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-		<property name="dataSource" ref="miBanco" />
+		<property name="dataSource" ref="baseDeDatos" />
 		<property name="packagesToScan"
 			value="modelos" />
 		<property name="jpaVendorAdapter">
