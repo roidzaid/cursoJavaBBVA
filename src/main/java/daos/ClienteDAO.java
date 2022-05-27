@@ -1,4 +1,4 @@
-package DAO;
+package daos;
 
 import java.util.Collection;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 
@@ -33,9 +33,11 @@ public class ClienteDAO implements DAO<Cliente>{
 	}
 	
 	//obtener cliente por nombre
+	@Override
 	public Optional<Cliente> findByNombre(String nombre) {
 		
-		Query query = entityManager.createQuery("SELECT * FROM Cliente c WHERE c.nombre = ?1");
+		//Query query = entityManager.createQuery("SELECT c FROM clientes c WHERE c.nombre = ?1");
+		TypedQuery<Cliente> query = entityManager.createNamedQuery("buscarPorNombre", Cliente.class);
 		query.setParameter(1, nombre);
 		Cliente cliente = (Cliente) query.getSingleResult();
 		
@@ -69,6 +71,7 @@ public class ClienteDAO implements DAO<Cliente>{
 		
 		
 	}
+
 	
 	
 	

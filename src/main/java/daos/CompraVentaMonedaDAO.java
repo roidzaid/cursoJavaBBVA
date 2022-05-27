@@ -1,4 +1,4 @@
-package DAO;
+package daos;
 
 import java.util.Collection;
 import java.util.List;
@@ -47,5 +47,11 @@ public class CompraVentaMonedaDAO implements DAO<CompraVentaMoneda>{
 		
 		List<CompraVentaMoneda> ComprasVentasMoneda = entityManager.createQuery("Select * From COMPRA_VENTA_MONEDA", CompraVentaMoneda.class).getResultList();
 		return ComprasVentasMoneda;
+	}
+
+	@Override
+	public Optional<CompraVentaMoneda> findByNombre(String nombre) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

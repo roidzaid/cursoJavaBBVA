@@ -1,4 +1,4 @@
-package DAO;
+package daos;
 
 import java.util.Collection;
 import java.util.List;
@@ -61,6 +61,12 @@ public class CuentaDAO implements DAO<Cuenta> {
 		
 		List<Cuenta> cuentas = entityManager.createQuery("Select * From cuentas", Cuenta.class).getResultList();
 		return cuentas;
+	}
+
+	@Override
+	public Optional<Cuenta> findByNombre(String nombre) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

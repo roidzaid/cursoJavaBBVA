@@ -1,4 +1,4 @@
-package DAO;
+package daos;
 
 import java.util.Collection;
 import java.util.List;
@@ -46,6 +46,12 @@ public class DepositoExtraccionDAO implements DAO<DepositoExtraccion>{
 		
 		List<DepositoExtraccion> depositosExtracciones = entityManager.createQuery("Select * From DEPOSITO_EXTRACCION", DepositoExtraccion.class).getResultList();
 		return depositosExtracciones;
+	}
+
+	@Override
+	public Optional<DepositoExtraccion> findByNombre(String nombre) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

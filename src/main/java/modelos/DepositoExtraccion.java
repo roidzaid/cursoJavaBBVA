@@ -1,28 +1,26 @@
 package modelos;
 
+import java.time.LocalDate;
+
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import lombok.Getter;
+
 @Entity
 @Table(name = "DEPOSITO_EXTRACCION")
+@Getter
 public class DepositoExtraccion extends Movimiento{
-	
+
 	private String caja;
 	
-	public DepositoExtraccion() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+	public DepositoExtraccion(LocalDate fechayHora, float monto, String descripcion, Cuenta cuenta, String caja) {
+		super(fechayHora, monto, descripcion, cuenta);
 
-
-	public DepositoExtraccion(String caja) {
-		super();
-		this.caja = caja;
+		this.caja=caja;
+		
 	}
-
-	public String getCaja() {
-		return caja;
-	}
+	
 
 	
 }

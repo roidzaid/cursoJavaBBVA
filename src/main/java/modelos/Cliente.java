@@ -1,49 +1,35 @@
 package modelos;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
 
+import exceptions.ExcepcionNombreInvalido;
+import exceptions.ExcepcionApellidoInvalido;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 
-@Entity
+@Entity(name = "clientes")
 @Table(name = "CLIENTES")
-@RequiredArgsConstructor
 @NoArgsConstructor
 @Data
+@NamedQuery(name = "buscarPorNombre", query = "SELECT c FROM clientes c WHERE c.nombre = ?1")
 public class Cliente {
 	
 	@Id	@GeneratedValue
 	private Long id;
 	
-	@NonNull
-	@NotEmpty (message = "{cliente.nombre}")
 	private String nombre;
-	
-	@NonNull
-	@NotEmpty (message = "{cliente.apellido}")
 	private String apellido;
-	
-	@NonNull
-	@NotEmpty (message = "{cliente.direccion}")
 	private Direccion direccion;
-	
 	private int telefono;
-	
-	@NonNull
 	@Email
 	private String email;
 	
@@ -51,9 +37,26 @@ public class Cliente {
 	private List<Cuenta> cuenta_titular = new ArrayList<>();
 	
 	@ManyToMany(mappedBy = "coTitulares")
-	private Set<Cuenta> cuenta_coTitulares  = new HashSet<>();
+	private List<Cuenta> cuenta_coTitulares  =  new ArrayList<>();
 	
-	
+	public Cliente(String nombre, String apellido, Direccion direccion, int telefono, @Email String email) throws ExcepcionNombreInvalido, ExcepcionApellidoInvalido{
+		
+		if (nombre==null || nombre=="") {
+			throw new ExcepcionNombreInvalido();
+		}
+		
+		if (apellido==null || apellido=="") {
+			throw new ExcepcionApellidoInvalido();
+		}
+		
+		
+		
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.direccion = direccion;
+		this.telefono = telefono;
+		this.email = email;
+	}
 	
 	
 	public void agregarCuentaTitular(Cuenta cuenta) {
@@ -63,6 +66,9 @@ public class Cliente {
 	public void agregarCuentaCoTitular(Cuenta cuenta) {
 		cuenta_coTitulares.add(cuenta);
 	}
+
+	
+
 
 		
 

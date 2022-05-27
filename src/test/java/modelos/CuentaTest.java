@@ -4,63 +4,161 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import exceptions.ExcepcionFechaDeCreacionInvalida;
+import exceptions.ExcepcionMonedaCuentaExtranjera;
+import exceptions.ExcepcionNroCuentaInvalido;
+import exceptions.ExcepcionSaldoInicialInvalido;
+
 public class CuentaTest {
 
 	
-	private LocalDate fechaCreacion = LocalDate.now();
-	private float saldoInicial = 0;
-	private float saldoActual = 100;
-	private float descubierto = 200;
-	private LocalDate fechaCierre = LocalDate.now();
-	private String monedaAsociada = "USD";
+	private final int NUMERO = 123456789;
+	private final Long NUMERO_CTA = (long) NUMERO;
+	private final LocalDate FEC_CREACION = LocalDate.now();
+	private final float SALDO_INICIAL = 100;
+	private final float SALDO_ACTUAL = 100;
+	private final float DESCUBIERTO = 200;
+	@SuppressWarnings("unused")
+	private final LocalDate FEC_CIERRE = LocalDate.now();
+	private final String MONEDA = "USD";
 	
-	private Cliente cliente;
+	private Cliente titular;
+	private Cliente coTitular1;
+	private Cliente coTitular2;
+	private Cliente coTitular3;
+	private Cliente coTitular4;
 	private CuentaNacional cuentaNacional;
 	private CuentaExtranjera cuentaExtranjera;
 	
-	private Transferencia transferencia;
+	private TransferenciaRecibida transferencia;
 	private DepositoExtraccion depositoExtraccion;
 	private CompraVentaMoneda compraVentaMoneda;
 	
 	@Before
 	public void crearCuenta() {
 		
-		cuentaNacional = new CuentaNacional();
-		cuentaExtranjera = new CuentaExtranjera(monedaAsociada);
+		titular = mock(Cliente.class);
+		coTitular1 = mock(Cliente.class);
+		coTitular2 = mock(Cliente.class);
+		coTitular3 = mock(Cliente.class);
+		coTitular4 = mock(Cliente.class);
 		
-		cliente = mock(Cliente.class);
-		transferencia = mock(Transferencia.class);
+		transferencia = mock(TransferenciaRecibida.class);
 		depositoExtraccion = mock(DepositoExtraccion.class);
 		compraVentaMoneda = mock(CompraVentaMoneda.class);
 		
 		
 	}
 	
+	@Test
+	public void constructorFijaAtributos_CuentaExtranjera() 
+			throws ExcepcionNroCuentaInvalido, 
+			       ExcepcionFechaDeCreacionInvalida, 
+			       ExcepcionSaldoInicialInvalido, 
+			       ExcepcionMonedaCuentaExtranjera {
+		
+		cuentaExtranjera = new CuentaExtranjera(NUMERO_CTA, FEC_CREACION, SALDO_INICIAL, SALDO_ACTUAL, DESCUBIERTO, titular, MONEDA);
+		
+		assertTrue(NUMERO_CTA.equals(cuentaExtranjera.getNro()));
+		assertTrue(FEC_CREACION.equals(cuentaExtranjera.getFechaCreacion()));
+		assertTrue(SALDO_INICIAL == cuentaExtranjera.getSaldoInicial());
+		assertTrue(SALDO_ACTUAL == cuentaExtranjera.getSaldoActual());
+		assertTrue(DESCUBIERTO  == cuentaExtranjera.getDescubierto());
+		assertTrue(titular.equals(cuentaExtranjera.getTitular()));
+		assertTrue(MONEDA.equals(cuentaExtranjera.getMonedaAsociada()));
+		
+	}
 	
 	@Test
-	public void cuenta_MantieneDatosEsperados() {
-		assertEquals(cuentaNacional.getFechaCreacion(), fechaCreacion);
-		assertTrue(cuentaNacional.getSaldoInicial()==saldoInicial);
-		assertTrue(cuentaNacional.getSaldoActual()==saldoActual);
-		assertTrue(cuentaNacional.getDescubierto()==descubierto);
-		assertEquals(cuentaNacional.getFechaCierre(), fechaCierre);
+	public void constructorFijaAtributos_CuentaNacional() 
+			throws ExcepcionNroCuentaInvalido, 
+			       ExcepcionFechaDeCreacionInvalida, 
+			       ExcepcionSaldoInicialInvalido {
+		
+		cuentaNacional = new CuentaNacional(NUMERO_CTA, FEC_CREACION, SALDO_INICIAL, SALDO_ACTUAL, DESCUBIERTO, titular);
+		
+		assertTrue(NUMERO_CTA.equals(cuentaNacional.getNro()));
+		assertTrue(FEC_CREACION.equals(cuentaNacional.getFechaCreacion()));
+		assertTrue(SALDO_INICIAL == cuentaNacional.getSaldoInicial());
+		assertTrue(SALDO_ACTUAL == cuentaNacional.getSaldoActual());
+		assertTrue(DESCUBIERTO  == cuentaNacional.getDescubierto());
+		assertTrue(titular.equals(cuentaNacional.getTitular()));
+		
 	}
 	
 	
+	@Test 
+	 public void validarDatosObligatorios_CuentaExtranjera() {
+		 assertThrows(ExcepcionNroCuentaInvalido.class, () -> {
+			 cuentaExtranjera = new CuentaExtranjera(null, FEC_CREACION, SALDO_INICIAL, SALDO_ACTUAL, DESCUBIERTO, titular, MONEDA);
+	    });
+		 
+		 assertThrows(ExcepcionFechaDeCreacionInvalida.class, () -> {
+			 cuentaExtranjera = new CuentaExtranjera(NUMERO_CTA, null, SALDO_INICIAL, SALDO_ACTUAL, DESCUBIERTO, titular, MONEDA);
+	    });
+		 
+		 assertThrows(ExcepcionSaldoInicialInvalido.class, () -> {
+			 cuentaExtranjera = new CuentaExtranjera(NUMERO_CTA, FEC_CREACION, -100, SALDO_ACTUAL, DESCUBIERTO, titular, MONEDA);
+	    });
+		 
+		 assertThrows(ExcepcionMonedaCuentaExtranjera.class, () -> {
+			 cuentaExtranjera = new CuentaExtranjera(NUMERO_CTA, FEC_CREACION, SALDO_INICIAL, SALDO_ACTUAL, DESCUBIERTO, titular, null);
+	    });
+		
+	 }
+	
+	@Test 
+	 public void validarDatosObligatorios_CuentaNacional() {
+		 assertThrows(ExcepcionNroCuentaInvalido.class, () -> {
+			 cuentaNacional = new CuentaNacional(null, FEC_CREACION, SALDO_INICIAL, SALDO_ACTUAL, DESCUBIERTO, titular);
+	    });
+		 
+		 assertThrows(ExcepcionFechaDeCreacionInvalida.class, () -> {
+			 cuentaNacional = new CuentaNacional(NUMERO_CTA, null, SALDO_INICIAL, SALDO_ACTUAL, DESCUBIERTO, titular);
+	    });
+		 
+		 assertThrows(ExcepcionSaldoInicialInvalido.class, () -> {
+			 cuentaNacional = new CuentaNacional(NUMERO_CTA, FEC_CREACION, -100, SALDO_ACTUAL, DESCUBIERTO, titular);
+	    });
+		
+	 }
+	
+	
 	@Test
-	public void AgregarMovimientos_guardaLosMovimientos() {
+	public void Cuenta_tieneMovimientos() throws ExcepcionNroCuentaInvalido, ExcepcionFechaDeCreacionInvalida, ExcepcionSaldoInicialInvalido {
+		
+		cuentaNacional = new CuentaNacional(NUMERO_CTA, FEC_CREACION, SALDO_INICIAL, SALDO_ACTUAL, DESCUBIERTO, titular);
+		
 		cuentaNacional.agregarMovimiento(compraVentaMoneda);
-		cuentaNacional.agregarMovimiento(depositoExtraccion);
 		cuentaNacional.agregarMovimiento(transferencia);
+		cuentaNacional.agregarMovimiento(depositoExtraccion);
 		
-		assertTrue("la cantidad no guarda los movimientos ", cuentaNacional.getMovimientos().size()>0);
+		List<Movimiento> movimientos = cuentaNacional.getMovimientos();
+		
+		assertEquals(3, movimientos.size());
 		
 	}
 	
 	
+	@Test
+	public void Cuenta_tieneCotitulares() throws ExcepcionNroCuentaInvalido, ExcepcionFechaDeCreacionInvalida, ExcepcionSaldoInicialInvalido {
+		
+		cuentaNacional = new CuentaNacional(NUMERO_CTA, FEC_CREACION, SALDO_INICIAL, SALDO_ACTUAL, DESCUBIERTO, titular);
+		
+		cuentaNacional.agregarCotitulares(coTitular1);
+		cuentaNacional.agregarCotitulares(coTitular2);
+		cuentaNacional.agregarCotitulares(coTitular3);
+		cuentaNacional.agregarCotitulares(coTitular4);
+		
+		List<Cliente> coTitulares = cuentaNacional.getCoTitulares();
+		
+		assertEquals(4, coTitulares.size());
+		
+	}
 
 }

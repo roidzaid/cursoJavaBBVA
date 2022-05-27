@@ -50,6 +50,6 @@
 		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 
 	<context:component-scan
-		base-package="DAO">
+		base-package="daos">
 	</context:component-scan>
 </beans>

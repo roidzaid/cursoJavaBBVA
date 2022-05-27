@@ -11,9 +11,12 @@ import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import lombok.Getter;
+
 @Entity
 @Table(name = "MOVIMIENTOS")
 @Inheritance(strategy = InheritanceType.JOINED)
+@Getter
 public abstract class Movimiento{
 
 	@Id @GeneratedValue
@@ -29,34 +32,12 @@ public abstract class Movimiento{
 	@ManyToOne
 	private Cuenta cuenta;
 	
-	public Movimiento() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
 
-
-	public Movimiento(LocalDate fechayHora, float monto, String descripcion) {
-		super();
+	public Movimiento(LocalDate fechayHora, float monto, String descripcion, Cuenta cuenta) {
 		this.fechayHora = fechayHora;
 		this.monto = monto;
 		this.descripcion = descripcion;
+		this.cuenta = cuenta;
 	}
-
-	public LocalDate getFechayHora() {
-		return fechayHora;
-	}
-
-
-	public float getMonto() {
-		return monto;
-	}
-
-
-	public String getDescripcion() {
-		return descripcion;
-	}
-
-	
-	
 	
 }
