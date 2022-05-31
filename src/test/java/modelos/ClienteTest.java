@@ -1,17 +1,19 @@
 package modelos;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 
 import java.util.List;
+import java.util.Set;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import exceptions.ExcepcionApellidoInvalido;
-import exceptions.ExcepcionNombreInvalido;
 
 public class ClienteTest {
 
@@ -36,7 +38,7 @@ public class ClienteTest {
 	}
 
 	@Test
-	public void ConstructorFijaAtributos_Cliente() throws ExcepcionNombreInvalido, ExcepcionApellidoInvalido {
+	public void ConstructorFijaAtributos_Cliente(){
 		
 		cliente = new Cliente(NOMBRE, APELLIDO, direccion, TELEFONO, MAIL);
 		
@@ -49,19 +51,20 @@ public class ClienteTest {
 	}
 	
 	 @Test 
-	 public void validarDatosObligatorios_Cliente() {
-		 assertThrows(ExcepcionNombreInvalido.class, () -> {
-		 	 cliente = new Cliente(null, APELLIDO, direccion, TELEFONO, MAIL);
-	    });
-		 
-		 assertThrows(ExcepcionApellidoInvalido.class, () -> {
-		 	 cliente = new Cliente(NOMBRE, "", direccion, TELEFONO, MAIL);
-	    });
+	 public void validarDatosObligatorios_Cliente(){
 		
+		 cliente = new Cliente(null, APELLIDO, direccion, TELEFONO, MAIL);
+		 
+		 ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+		 Validator validator = factory.getValidator();
+		 Set<ConstraintViolation<Cliente>> violations = validator.validate(cliente);
+
+		 assertTrue(violations.size() > 0);
+		 
 	 }
 	 
 	 @Test
-	 public void TitularYCoTitularDeMasDeUnaCuenta_Cliente() throws ExcepcionNombreInvalido, ExcepcionApellidoInvalido {
+	 public void TitularYCoTitularDeMasDeUnaCuenta_Cliente(){
 		 
 		 cliente = new Cliente(NOMBRE, APELLIDO, direccion, TELEFONO, MAIL);
 		 

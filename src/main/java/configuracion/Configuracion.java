@@ -17,7 +17,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
-@ComponentScan(basePackages ={"configuracion", "main", "daos"})
+@ComponentScan(basePackages ={"configuracion", "main", "daos", "servicios"})
 @EnableTransactionManagement
 public class Configuracion {
 	
@@ -34,7 +34,7 @@ public class Configuracion {
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
 		LocalContainerEntityManagerFactoryBean emf  = new LocalContainerEntityManagerFactoryBean();
 		emf.setDataSource(dataSource());
-		emf.setPackagesToScan(new String[] {"modelos", "daos"});
+		emf.setPackagesToScan(new String[] {"modelos", "daos", "servicios"});
 		JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
 		emf.setJpaVendorAdapter(vendorAdapter);
 		emf.setJpaProperties(additionalProperties());

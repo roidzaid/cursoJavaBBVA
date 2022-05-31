@@ -4,11 +4,8 @@ import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.validation.constraints.NotEmpty;
 
-import exceptions.ExcepcionFechaDeCreacionInvalida;
-import exceptions.ExcepcionMonedaCuentaExtranjera;
-import exceptions.ExcepcionNroCuentaInvalido;
-import exceptions.ExcepcionSaldoInicialInvalido;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,22 +14,30 @@ import lombok.Setter;
 @Setter
 public class CuentaExtranjera extends Cuenta{
 	
+	@NotEmpty
 	@Column(name="moneda")
 	private String monedaAsociada;
 
 	public CuentaExtranjera(Long nro, LocalDate fechaCreacion, float saldoInicial, float saldoActual, float descubierto,
-			Cliente titular, String monedaAsociada)
-			throws ExcepcionNroCuentaInvalido, ExcepcionFechaDeCreacionInvalida, ExcepcionSaldoInicialInvalido, ExcepcionMonedaCuentaExtranjera {
+			Cliente titular, String monedaAsociada){
 		
 		super(nro, fechaCreacion, saldoInicial, saldoActual, descubierto, titular);
-		
-		if(monedaAsociada==null || monedaAsociada=="") {
-			throw new ExcepcionMonedaCuentaExtranjera();
-		}
 		
 		this.monedaAsociada = monedaAsociada;
 		
 	}
+
+	public CuentaExtranjera() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public CuentaExtranjera(Long nro, LocalDate fechaCreacion, float saldoInicial, float saldoActual, float descubierto,
+			Cliente titular) {
+		super(nro, fechaCreacion, saldoInicial, saldoActual, descubierto, titular);
+		// TODO Auto-generated constructor stub
+	}
+
 	
 	
 

@@ -5,14 +5,15 @@ import static org.mockito.Mockito.mock;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import exceptions.ExcepcionFechaDeCreacionInvalida;
-import exceptions.ExcepcionMonedaCuentaExtranjera;
-import exceptions.ExcepcionNroCuentaInvalido;
-import exceptions.ExcepcionSaldoInicialInvalido;
 
 public class CuentaTest {
 
@@ -56,11 +57,7 @@ public class CuentaTest {
 	}
 	
 	@Test
-	public void constructorFijaAtributos_CuentaExtranjera() 
-			throws ExcepcionNroCuentaInvalido, 
-			       ExcepcionFechaDeCreacionInvalida, 
-			       ExcepcionSaldoInicialInvalido, 
-			       ExcepcionMonedaCuentaExtranjera {
+	public void constructorFijaAtributos_CuentaExtranjera(){
 		
 		cuentaExtranjera = new CuentaExtranjera(NUMERO_CTA, FEC_CREACION, SALDO_INICIAL, SALDO_ACTUAL, DESCUBIERTO, titular, MONEDA);
 		
@@ -75,10 +72,7 @@ public class CuentaTest {
 	}
 	
 	@Test
-	public void constructorFijaAtributos_CuentaNacional() 
-			throws ExcepcionNroCuentaInvalido, 
-			       ExcepcionFechaDeCreacionInvalida, 
-			       ExcepcionSaldoInicialInvalido {
+	public void constructorFijaAtributos_CuentaNacional(){
 		
 		cuentaNacional = new CuentaNacional(NUMERO_CTA, FEC_CREACION, SALDO_INICIAL, SALDO_ACTUAL, DESCUBIERTO, titular);
 		
@@ -94,43 +88,34 @@ public class CuentaTest {
 	
 	@Test 
 	 public void validarDatosObligatorios_CuentaExtranjera() {
-		 assertThrows(ExcepcionNroCuentaInvalido.class, () -> {
-			 cuentaExtranjera = new CuentaExtranjera(null, FEC_CREACION, SALDO_INICIAL, SALDO_ACTUAL, DESCUBIERTO, titular, MONEDA);
-	    });
-		 
-		 assertThrows(ExcepcionFechaDeCreacionInvalida.class, () -> {
-			 cuentaExtranjera = new CuentaExtranjera(NUMERO_CTA, null, SALDO_INICIAL, SALDO_ACTUAL, DESCUBIERTO, titular, MONEDA);
-	    });
-		 
-		 assertThrows(ExcepcionSaldoInicialInvalido.class, () -> {
-			 cuentaExtranjera = new CuentaExtranjera(NUMERO_CTA, FEC_CREACION, -100, SALDO_ACTUAL, DESCUBIERTO, titular, MONEDA);
-	    });
-		 
-		 assertThrows(ExcepcionMonedaCuentaExtranjera.class, () -> {
-			 cuentaExtranjera = new CuentaExtranjera(NUMERO_CTA, FEC_CREACION, SALDO_INICIAL, SALDO_ACTUAL, DESCUBIERTO, titular, null);
-	    });
 		
-	 }
+		cuentaExtranjera = new CuentaExtranjera(NUMERO_CTA, null, SALDO_INICIAL, SALDO_ACTUAL, DESCUBIERTO, titular, MONEDA);
+		
+		 ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+		 Validator validator = factory.getValidator();
+		 Set<ConstraintViolation<CuentaExtranjera>> violations = validator.validate(cuentaExtranjera);
+		
+		 assertTrue(violations.size() > 0);
+		 
+	}
 	
 	@Test 
-	 public void validarDatosObligatorios_CuentaNacional() {
-		 assertThrows(ExcepcionNroCuentaInvalido.class, () -> {
-			 cuentaNacional = new CuentaNacional(null, FEC_CREACION, SALDO_INICIAL, SALDO_ACTUAL, DESCUBIERTO, titular);
-	    });
-		 
-		 assertThrows(ExcepcionFechaDeCreacionInvalida.class, () -> {
-			 cuentaNacional = new CuentaNacional(NUMERO_CTA, null, SALDO_INICIAL, SALDO_ACTUAL, DESCUBIERTO, titular);
-	    });
-		 
-		 assertThrows(ExcepcionSaldoInicialInvalido.class, () -> {
-			 cuentaNacional = new CuentaNacional(NUMERO_CTA, FEC_CREACION, -100, SALDO_ACTUAL, DESCUBIERTO, titular);
-	    });
+	 public void validarMoneda_CuentaExtranjera() {
+	
+		cuentaExtranjera = new CuentaExtranjera(NUMERO_CTA, FEC_CREACION, SALDO_INICIAL, SALDO_ACTUAL, DESCUBIERTO, titular, null); 
 		
-	 }
+		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+		 Validator validator = factory.getValidator();
+		 Set<ConstraintViolation<CuentaExtranjera>> violations = validator.validate(cuentaExtranjera);
+		
+		 assertTrue(violations.size() > 0);
+		
+	}	
+	 
 	
 	
 	@Test
-	public void Cuenta_tieneMovimientos() throws ExcepcionNroCuentaInvalido, ExcepcionFechaDeCreacionInvalida, ExcepcionSaldoInicialInvalido {
+	public void Cuenta_tieneMovimientos(){
 		
 		cuentaNacional = new CuentaNacional(NUMERO_CTA, FEC_CREACION, SALDO_INICIAL, SALDO_ACTUAL, DESCUBIERTO, titular);
 		
@@ -146,7 +131,7 @@ public class CuentaTest {
 	
 	
 	@Test
-	public void Cuenta_tieneCotitulares() throws ExcepcionNroCuentaInvalido, ExcepcionFechaDeCreacionInvalida, ExcepcionSaldoInicialInvalido {
+	public void Cuenta_tieneCotitulares(){
 		
 		cuentaNacional = new CuentaNacional(NUMERO_CTA, FEC_CREACION, SALDO_INICIAL, SALDO_ACTUAL, DESCUBIERTO, titular);
 		

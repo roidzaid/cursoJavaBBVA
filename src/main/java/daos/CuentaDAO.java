@@ -45,7 +45,7 @@ public class CuentaDAO implements DAO<Cuenta> {
 	@Override
 	public void update(Cuenta cuenta) {
 		
-		entityManager.persist(cuenta);
+		entityManager.merge(cuenta);
 		
 	}
 

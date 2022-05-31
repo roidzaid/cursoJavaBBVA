@@ -31,7 +31,7 @@ public class DepositoExtraccionDAO implements DAO<DepositoExtraccion>{
 	@Override
 	public void update(DepositoExtraccion depositoExtraccion) {
 		
-		entityManager.persist(depositoExtraccion);
+		entityManager.merge(depositoExtraccion);
 	}
 
 	@Override

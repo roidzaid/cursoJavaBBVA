@@ -18,9 +18,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 import configuracion.Configuracion;
-import exceptions.ExcepcionApellidoInvalido;
-import exceptions.ExcepcionDireccionInvalida;
-import exceptions.ExcepcionNombreInvalido;
 import modelos.Cliente;
 import modelos.Direccion;
 

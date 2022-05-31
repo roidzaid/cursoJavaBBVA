@@ -4,16 +4,18 @@ import java.time.LocalDate;
 
 import javax.persistence.Entity;
 
-import exceptions.ExcepcionFechaDeCreacionInvalida;
-import exceptions.ExcepcionNroCuentaInvalido;
-import exceptions.ExcepcionSaldoInicialInvalido;
-
 @Entity
 public class CuentaNacional extends Cuenta{
 
+	
+	
+	public CuentaNacional() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public CuentaNacional(Long nro, LocalDate fechaCreacion, float saldoInicial, float saldoActual, float descubierto,
-			Cliente titular)
-			throws ExcepcionNroCuentaInvalido, ExcepcionFechaDeCreacionInvalida, ExcepcionSaldoInicialInvalido {
+			Cliente titular){
 		super(nro, fechaCreacion, saldoInicial, saldoActual, descubierto, titular);
 		
 	}

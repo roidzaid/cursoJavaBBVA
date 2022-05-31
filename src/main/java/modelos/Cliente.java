@@ -2,6 +2,7 @@ package modelos;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -10,9 +11,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 
-import exceptions.ExcepcionNombreInvalido;
-import exceptions.ExcepcionApellidoInvalido;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -26,7 +26,9 @@ public class Cliente {
 	@Id	@GeneratedValue
 	private Long id;
 	
+	@NotEmpty
 	private String nombre;
+	@NotEmpty
 	private String apellido;
 	private Direccion direccion;
 	private int telefono;
@@ -39,18 +41,7 @@ public class Cliente {
 	@ManyToMany(mappedBy = "coTitulares")
 	private List<Cuenta> cuenta_coTitulares  =  new ArrayList<>();
 	
-	public Cliente(String nombre, String apellido, Direccion direccion, int telefono, @Email String email) throws ExcepcionNombreInvalido, ExcepcionApellidoInvalido{
-		
-		if (nombre==null || nombre=="") {
-			throw new ExcepcionNombreInvalido();
-		}
-		
-		if (apellido==null || apellido=="") {
-			throw new ExcepcionApellidoInvalido();
-		}
-		
-		
-		
+	public Cliente(String nombre, String apellido, Direccion direccion, int telefono, @Email String email){
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.direccion = direccion;

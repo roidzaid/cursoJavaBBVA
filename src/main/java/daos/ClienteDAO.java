@@ -48,7 +48,7 @@ public class ClienteDAO implements DAO<Cliente>{
 	@Override
 	public void update(Cliente cliente) {
 
-		entityManager.persist(cliente);
+		entityManager.merge(cliente);
 	}
 
 	@Override

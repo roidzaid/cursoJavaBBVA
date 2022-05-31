@@ -32,7 +32,7 @@ public class CompraVentaMonedaDAO implements DAO<CompraVentaMoneda>{
 
 	@Override
 	public void update(CompraVentaMoneda compraVentaMoneda) {
-		entityManager.persist(compraVentaMoneda);
+		entityManager.merge(compraVentaMoneda);
 		
 	}
 

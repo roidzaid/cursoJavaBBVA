@@ -9,9 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import configuracion.Configuracion;
 import daos.DAO;
-import exceptions.ExcepcionApellidoInvalido;
-import exceptions.ExcepcionDireccionInvalida;
-import exceptions.ExcepcionNombreInvalido;
 import modelos.Cliente;
 import modelos.Direccion;
 
@@ -38,17 +35,19 @@ public class miBancoLeandroRoidzaid {
 	private DAO<Cliente> clienteDao;
 
 	@Transactional
-	public void usar() throws ExcepcionDireccionInvalida, ExcepcionNombreInvalido, ExcepcionApellidoInvalido {
+	public void usar(){
 		
 		direccion = new Direccion(CALLE, NUM, DEPTO, PISO, CIUDAD, CP, PROV);
 		cliente = new Cliente(NOMBRE, APELLIDO, direccion, TELEFONO, MAIL);
 		
 		clienteDao.save(cliente);
 		
+		System.out.println(clienteDao.findByNombre("Leandro"));
+		
 	}
 	
 		
-	public static void main(String[] args) throws ExcepcionDireccionInvalida, ExcepcionNombreInvalido, ExcepcionApellidoInvalido {
+	public static void main(String[] args){
 		ApplicationContext ctx = new AnnotationConfigApplicationContext(Configuracion.class);
 		
 		miBancoLeandroRoidzaid usa = ctx.getBean("miBancoLeandroRoidzaid",miBancoLeandroRoidzaid.class);

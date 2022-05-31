@@ -2,7 +2,6 @@ package modelos;
 
 import javax.persistence.Embeddable;
 
-import exceptions.ExcepcionDireccionInvalida;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -22,13 +21,7 @@ public class Direccion {
 	
 	
 	
-	public Direccion(String calle, int numeroCivico, String departamento, int piso, String ciudad, int codigoPosta, String provincia) throws ExcepcionDireccionInvalida {
-		
-		if(calle == null || calle == "" || ciudad == null || ciudad == "" || codigoPosta < 1000 || provincia == null || provincia == "") {
-			throw new ExcepcionDireccionInvalida();
-		}
-		
-		
+	public Direccion(String calle, int numeroCivico, String departamento, int piso, String ciudad, int codigoPosta, String provincia){
 		this.calle = calle;
 		this.numeroCivico = numeroCivico;
 		this.departamento = departamento;

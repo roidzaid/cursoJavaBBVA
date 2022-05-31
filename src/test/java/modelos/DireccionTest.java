@@ -1,9 +1,8 @@
 package modelos;
 
-import static org.junit.Assert.*;
-import org.junit.Test;
+import static org.junit.Assert.assertTrue;
 
-import exceptions.ExcepcionDireccionInvalida;
+import org.junit.Test;
 
 public class DireccionTest {
 
@@ -19,7 +18,7 @@ public class DireccionTest {
 	
 	
 	@Test
-	public void ConstructorFijaAtributos_Direccion() throws ExcepcionDireccionInvalida {
+	public void ConstructorFijaAtributos_Direccion(){
 		
 		direccion = new Direccion(CALLE, NUM, DEPTO, PISO, CIUDAD, CP, PROV);
 		

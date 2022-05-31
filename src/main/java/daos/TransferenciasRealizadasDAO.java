@@ -9,50 +9,50 @@ import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
 
-import modelos.TransferenciaRecibida;
+import modelos.TransferenciaRealizada;
 
 @Repository("TransferenciasRealizadasDAO")
-public class TransferenciasRealizadasDAO implements DAO<TransferenciaRecibida>{
+public class TransferenciasRealizadasDAO implements DAO<TransferenciaRealizada>{
 
 	@PersistenceContext
     private EntityManager entityManager;
 	
 	@Override
-	public void save(TransferenciaRecibida transferencia) {
+	public void save(TransferenciaRealizada transferencia) {
 		
 		entityManager.persist(transferencia);
 		
 	}
 
 	@Override
-	public Optional<TransferenciaRecibida> findById(Long id) {
+	public Optional<TransferenciaRealizada> findById(Long id) {
 
-		return Optional.ofNullable(entityManager.find(TransferenciaRecibida.class, id));
+		return Optional.ofNullable(entityManager.find(TransferenciaRealizada.class, id));
 	}
 
 	@Override
-	public void update(TransferenciaRecibida transferencia) {
+	public void update(TransferenciaRealizada transferencia) {
 		
 		entityManager.merge(transferencia);
 		
 	}
 
 	@Override
-	public void delete(TransferenciaRecibida transferencia) {
+	public void delete(TransferenciaRealizada transferencia) {
 		
 		entityManager.remove(transferencia);
 		
 	}
 
 	@Override
-	public Collection<TransferenciaRecibida> findAll() {
+	public Collection<TransferenciaRealizada> findAll() {
 		
-		List<TransferenciaRecibida> transferencias = entityManager.createQuery("Select * From transferencias", TransferenciaRecibida.class).getResultList();
+		List<TransferenciaRealizada> transferencias = entityManager.createQuery("Select * From transferencias", TransferenciaRealizada.class).getResultList();
 		return transferencias;
 	}
 
 	@Override
-	public Optional<TransferenciaRecibida> findByNombre(String nombre) {
+	public Optional<TransferenciaRealizada> findByNombre(String nombre) {
 		// TODO Auto-generated method stub
 		return null;
 	}

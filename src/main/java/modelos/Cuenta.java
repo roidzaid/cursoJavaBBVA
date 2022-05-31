@@ -3,6 +3,7 @@ package modelos;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,26 +12,33 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import exceptions.ExcepcionFechaDeCreacionInvalida;
-import exceptions.ExcepcionNroCuentaInvalido;
-import exceptions.ExcepcionSaldoInicialInvalido;
+import javax.validation.constraints.NotNull;
+
+import exceptions.ExceptionCuentaCerrada;
+import exceptions.ExceptionSaldoInsuficiente;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "CUENTAS")
 @Getter
+@NoArgsConstructor
 public abstract class Cuenta{
 	
 	@Id @GeneratedValue
 	private Long id;
 	
+	
 	@Column(name="nro_cuenta")
+	@NotNull
 	private Long nro;
 
 	@Column(name="fecha_creacion")
+	@NotNull
 	private LocalDate fechaCreacion;
 	
 	@Column(name="saldo_inicial")
+	@NotNull
 	private float saldoInicial;
 	
 	@Column(name="saldo_actual")
@@ -58,22 +66,7 @@ public abstract class Cuenta{
 	private List<TransferenciaRealizada> transferenciasRealizadas = new ArrayList<>();
 	
 	
-	public Cuenta(Long nro, LocalDate fechaCreacion, float saldoInicial, float saldoActual, float descubierto, Cliente titular) 
-			throws ExcepcionNroCuentaInvalido, ExcepcionFechaDeCreacionInvalida, ExcepcionSaldoInicialInvalido {
-
-		if(nro == null) {
-			throw new ExcepcionNroCuentaInvalido();
-		}
-		
-		if(fechaCreacion==null || fechaCreacion.isAfter(LocalDate.now())) {
-			throw new ExcepcionFechaDeCreacionInvalida();			
-		}
-		
-		if(saldoInicial <= 0) {
-			throw new ExcepcionSaldoInicialInvalido();
-		}
-		
-		
+	public Cuenta(Long nro, LocalDate fechaCreacion, float saldoInicial, float saldoActual, float descubierto, Cliente titular){
 		this.nro = nro;
 		this.fechaCreacion = fechaCreacion;
 		this.saldoInicial = saldoInicial;
@@ -90,7 +83,18 @@ public abstract class Cuenta{
 		coTitulares.add(coTitular);
 	}
 	
+	public boolean esTitular(Cliente cliente) {
+		return cliente.getId()==titular.getId();
+	}
 	
+	public boolean esCoTitular(Cliente cliente) {
+		for (Cliente coTitular : coTitulares) {
+			if(cliente.getId()==coTitular.getId()) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	public void setSaldoActual(float saldoActual) {
 		this.saldoActual = saldoActual;
@@ -103,9 +107,20 @@ public abstract class Cuenta{
 	public void setFechaCierre(LocalDate fechaCierre) {
 		this.fechaCierre = fechaCierre;
 	}
-
 	
+	public void ValidarEstadoDeCuenta() throws ExceptionCuentaCerrada {
+		
+		if(fechaCierre!=null) {
+			throw new ExceptionCuentaCerrada();
+		}
+		
+	}
 	
-
+	public void validarSaldoDisponible(float monto) throws ExceptionSaldoInsuficiente {
+		
+		if (saldoActual < monto) {
+			throw new ExceptionSaldoInsuficiente();
+		}
+	}
 
 }
