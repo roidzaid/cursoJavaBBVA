@@ -2,14 +2,12 @@ package servicios;
 
 import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.time.LocalDate;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.cursobbva.modulo3.testexcepciones.ExcepcionSaldoInsuficiente;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,9 +59,9 @@ class ServicioTranferenciaImplTest {
 	private final int NUMERO = 123456789;
 	private final Long NUMERO_CTA = (long) NUMERO;
 	private final LocalDate FEC_CREACION = LocalDate.now();
-	private final float SALDO_INICIAL = 100;
-	private final float SALDO_ACTUAL = 100;
-	private final float DESCUBIERTO = 200;
+	private final Double SALDO_INICIAL = 100.0;
+	private final Double SALDO_ACTUAL = 100.0;
+	private final Double DESCUBIERTO = 200.0;
 	@SuppressWarnings("unused")
 	private final LocalDate FEC_CIERRE = LocalDate.now();
 	
@@ -96,38 +94,43 @@ class ServicioTranferenciaImplTest {
  		CuentaNacional ctaOrigen = em.find(CuentaNacional.class, cuenta1.getId());
  		CuentaNacional ctaDestino = em.find(CuentaNacional.class, cuenta2.getId());
 		
-		servicioTransferencias.transferir(ctaOrigen.getId(), 50, ctaDestino.getId());
+		servicioTransferencias.transferir(ctaOrigen.getId(), 50.0, ctaDestino.getId());
 		
 	}
 	
 	@Test
-	void Transferencia_SaldoInsuficiente() throws ExceptionSaldoInsuficiente, ExceptionCuentaCerrada, ExceptionCuentaNoExiste{
+	void Transferencia_SaldoInsuficiente() throws ExceptionSaldoInsuficiente{
 			
-			direccion = new Direccion(CALLE, NUM, DEPTO, PISO, CIUDAD, CP, PROV);
-			cliente1 = new Cliente(NOMBRE, APELLIDO, direccion, TELEFONO, MAIL);
-			cliente2 = new Cliente(NOMBRE, APELLIDO, direccion, TELEFONO, MAIL);
+		direccion = new Direccion(CALLE, NUM, DEPTO, PISO, CIUDAD, CP, PROV);
+		cliente1 = new Cliente(NOMBRE, APELLIDO, direccion, TELEFONO, MAIL);
+		cliente2 = new Cliente(NOMBRE, APELLIDO, direccion, TELEFONO, MAIL);
+		
+		clienteDao.save(cliente1);
+		clienteDao.save(cliente2);
+		
+		cuenta1 = new CuentaNacional(NUMERO_CTA, FEC_CREACION, SALDO_INICIAL, SALDO_ACTUAL, DESCUBIERTO, cliente1);
+		cuenta2 = new CuentaNacional(NUMERO_CTA, FEC_CREACION, SALDO_INICIAL, SALDO_ACTUAL, DESCUBIERTO, cliente2);
+		
+		cuentaDao.save(cuenta1);
+		cuentaDao.save(cuenta2);
+		em.flush();
+
+		assertNotNull(cuenta1.getId());
+		assertNotNull(cuenta2.getId());
+		
+		em.clear();
+ 		CuentaNacional ctaOrigen = em.find(CuentaNacional.class, cuenta1.getId());
+ 		CuentaNacional ctaDestino = em.find(CuentaNacional.class, cuenta2.getId());
+		
+	 	assertThrows(ExceptionSaldoInsuficiente.class, () -> {
+	 		
+	 		servicioTransferencias.transferir(ctaOrigen.getId(), 2000.0, ctaDestino.getId());
+	 	});
 			
-			clienteDao.save(cliente1);
-			clienteDao.save(cliente2);
-			
-			cuenta1 = new CuentaNacional(NUMERO_CTA, FEC_CREACION, SALDO_INICIAL, SALDO_ACTUAL, DESCUBIERTO, cliente1);
-			cuenta2 = new CuentaNacional(NUMERO_CTA, FEC_CREACION, SALDO_INICIAL, SALDO_ACTUAL, DESCUBIERTO, cliente2);
-			
-			cuentaDao.save(cuenta1);
-			cuentaDao.save(cuenta2);
-			em.flush();
-	
-			assertNotNull(cuenta1.getId());
-			assertNotNull(cuenta2.getId());
-			
-			em.clear();
-	 		CuentaNacional ctaOrigen = em.find(CuentaNacional.class, cuenta1.getId());
-	 		CuentaNacional ctaDestino = em.find(CuentaNacional.class, cuenta2.getId());
-			
-	 		assertThrows(ExceptionSaldoInsuficiente.class, () -> {
-	 			servicioTransferencias.transferir(ctaOrigen.getId(), 2000, ctaDestino.getId());
-	 		});
-			
+		
+	 		
+
+
 
 			
 		

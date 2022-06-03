@@ -12,10 +12,10 @@ import lombok.Getter;
 @Getter
 public class CompraVentaMoneda extends Movimiento{
 
-	private float cotizacion;
-	private float comision;
+	private Double cotizacion;
+	private Double comision;
 	
-	public CompraVentaMoneda(LocalDate fechayHora, float monto, String descripcion, Cuenta cuenta, float cotizacion, float comision) {
+	public CompraVentaMoneda(LocalDate fechayHora, Double monto, String descripcion, Cuenta cuenta, Double cotizacion, Double comision) {
 		super(fechayHora, monto, descripcion, cuenta);
 		
 		this.comision=comision;

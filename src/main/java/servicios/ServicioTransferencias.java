@@ -9,6 +9,6 @@ import exceptions.ExceptionSaldoInsuficiente;
 public interface ServicioTransferencias {
 	
 	@Transactional
-	public void transferir(Long idCuentaOrigen, float monto, Long idCuentaDestino) throws ExceptionCuentaCerrada, ExceptionSaldoInsuficiente, ExceptionCuentaNoExiste;
+	public void transferir(Long idCuentaOrigen, Double monto, Long idCuentaDestino) throws ExceptionCuentaCerrada, ExceptionSaldoInsuficiente, ExceptionCuentaNoExiste;
 
 }

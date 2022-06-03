@@ -14,10 +14,13 @@ public class CuentaNacional extends Cuenta{
 		// TODO Auto-generated constructor stub
 	}
 
-	public CuentaNacional(Long nro, LocalDate fechaCreacion, float saldoInicial, float saldoActual, float descubierto,
+	public CuentaNacional(Long nro, LocalDate fechaCreacion, Double saldoInicial, Double saldoActual, Double descubierto,
 			Cliente titular){
 		super(nro, fechaCreacion, saldoInicial, saldoActual, descubierto, titular);
 		
 	}
 	
+	public String getMonedaAsociada() {
+		return "ARS";
+	}
 }

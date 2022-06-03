@@ -14,7 +14,7 @@ public class DepositoExtraccion extends Movimiento{
 
 	private String caja;
 	
-	public DepositoExtraccion(LocalDate fechayHora, float monto, String descripcion, Cuenta cuenta, String caja) {
+	public DepositoExtraccion(LocalDate fechayHora, Double monto, String descripcion, Cuenta cuenta, String caja) {
 		super(fechayHora, monto, descripcion, cuenta);
 
 		this.caja=caja;

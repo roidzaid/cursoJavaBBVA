@@ -33,7 +33,7 @@ public class ServicioTranferenciaImpl implements ServicioTransferencias{
     private EntityManager em;
 	
 	@Override
-	public void transferir(Long idCuentaOrigen, float monto, Long idCuentaDestino) throws ExceptionCuentaCerrada, ExceptionSaldoInsuficiente, ExceptionCuentaNoExiste {
+	public void transferir(Long idCuentaOrigen, Double monto, Long idCuentaDestino) throws ExceptionCuentaCerrada, ExceptionSaldoInsuficiente, ExceptionCuentaNoExiste {
 		
 		Optional<Cuenta> cuenta = cuentaDAO.findById(idCuentaOrigen);
 		

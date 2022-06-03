@@ -39,13 +39,13 @@ public abstract class Cuenta{
 	
 	@Column(name="saldo_inicial")
 	@NotNull
-	private float saldoInicial;
+	private Double saldoInicial;
 	
 	@Column(name="saldo_actual")
-	private float saldoActual;
+	private Double saldoActual;
 	
 	@Column(name="descubierto")
-	private float descubierto;
+	private Double descubierto;
 	
 	@Column(name="fecha_cierre")
 	private LocalDate fechaCierre;
@@ -66,7 +66,7 @@ public abstract class Cuenta{
 	private List<TransferenciaRealizada> transferenciasRealizadas = new ArrayList<>();
 	
 	
-	public Cuenta(Long nro, LocalDate fechaCreacion, float saldoInicial, float saldoActual, float descubierto, Cliente titular){
+	public Cuenta(Long nro, LocalDate fechaCreacion, Double saldoInicial, Double saldoActual, Double descubierto, Cliente titular){
 		this.nro = nro;
 		this.fechaCreacion = fechaCreacion;
 		this.saldoInicial = saldoInicial;
@@ -96,11 +96,11 @@ public abstract class Cuenta{
 		return false;
 	}
 
-	public void setSaldoActual(float saldoActual) {
+	public void setSaldoActual(Double saldoActual) {
 		this.saldoActual = saldoActual;
 	}
 
-	public void setDescubierto(float descubierto) {
+	public void setDescubierto(Double descubierto) {
 		this.descubierto = descubierto;
 	}
 
@@ -116,11 +116,13 @@ public abstract class Cuenta{
 		
 	}
 	
-	public void validarSaldoDisponible(float monto) throws ExceptionSaldoInsuficiente {
+	public void validarSaldoDisponible(Double monto) throws ExceptionSaldoInsuficiente {
 		
 		if (saldoActual < monto) {
 			throw new ExceptionSaldoInsuficiente();
 		}
 	}
 
+	
+	
 }

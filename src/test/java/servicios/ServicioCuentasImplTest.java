@@ -58,9 +58,9 @@ class ServicioCuentasImplTest {
 	private final int NUMERO = 123456789;
 	private final Long NUMERO_CTA = (long) NUMERO;
 	private final LocalDate FEC_CREACION = LocalDate.now();
-	private final float SALDO_INICIAL = 100;
-	private final float SALDO_ACTUAL = 100;
-	private final float DESCUBIERTO = 200;
+	private final Double SALDO_INICIAL = 100.0;
+	private final Double SALDO_ACTUAL = 100.0;
+	private final Double DESCUBIERTO = 200.0;
 	@SuppressWarnings("unused")
 	private final LocalDate FEC_CIERRE = LocalDate.now();
 	private final String MONEDA = "USD";

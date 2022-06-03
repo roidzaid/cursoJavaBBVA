@@ -10,7 +10,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Getter
 @Setter
 public class CuentaExtranjera extends Cuenta{
 	
@@ -18,7 +17,7 @@ public class CuentaExtranjera extends Cuenta{
 	@Column(name="moneda")
 	private String monedaAsociada;
 
-	public CuentaExtranjera(Long nro, LocalDate fechaCreacion, float saldoInicial, float saldoActual, float descubierto,
+	public CuentaExtranjera(Long nro, LocalDate fechaCreacion, Double saldoInicial, Double saldoActual, Double descubierto,
 			Cliente titular, String monedaAsociada){
 		
 		super(nro, fechaCreacion, saldoInicial, saldoActual, descubierto, titular);
@@ -32,10 +31,14 @@ public class CuentaExtranjera extends Cuenta{
 		// TODO Auto-generated constructor stub
 	}
 
-	public CuentaExtranjera(Long nro, LocalDate fechaCreacion, float saldoInicial, float saldoActual, float descubierto,
+	public CuentaExtranjera(Long nro, LocalDate fechaCreacion, Double saldoInicial, Double saldoActual, Double descubierto,
 			Cliente titular) {
 		super(nro, fechaCreacion, saldoInicial, saldoActual, descubierto, titular);
 		// TODO Auto-generated constructor stub
+	}
+
+	public String getMonedaAsociada() {
+		return monedaAsociada;
 	}
 
 	

@@ -26,14 +26,14 @@ public abstract class Movimiento{
 	@Column(name="fecha_hora")
 	private LocalDate fechayHora;
 	
-	private float monto;
+	private Double monto;
 	private String descripcion;
 	
 	@ManyToOne
 	private Cuenta cuenta;
 	
 
-	public Movimiento(LocalDate fechayHora, float monto, String descripcion, Cuenta cuenta) {
+	public Movimiento(LocalDate fechayHora, Double monto, String descripcion, Cuenta cuenta) {
 		this.fechayHora = fechayHora;
 		this.monto = monto;
 		this.descripcion = descripcion;

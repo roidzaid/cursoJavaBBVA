@@ -9,7 +9,9 @@ public interface ResultadoCambio {
 	/**
 	 * @return El resultado de la conversion
 	 */
-	public Double getResultado();
+	public Double getResultado(Double monto);
+
+
 
 
 }
