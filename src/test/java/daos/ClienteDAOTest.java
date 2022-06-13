@@ -17,9 +17,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
-import configuracion.Configuracion;
-import modelos.Cliente;
-import modelos.Direccion;
+import app.configuracion.Configuracion;
+import app.daos.DAO;
+import app.modelos.Cliente;
+import app.modelos.Direccion;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = Configuracion.class)

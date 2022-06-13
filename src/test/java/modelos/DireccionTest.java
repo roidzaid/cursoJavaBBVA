@@ -2,7 +2,9 @@ package modelos;
 
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import app.modelos.Direccion;
 
 public class DireccionTest {
 

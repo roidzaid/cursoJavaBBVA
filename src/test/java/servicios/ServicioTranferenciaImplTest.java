@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,15 +16,16 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
-import configuracion.Configuracion;
-import daos.DAO;
-import exceptions.ExceptionCuentaCerrada;
-import exceptions.ExceptionCuentaNoExiste;
-import exceptions.ExceptionSaldoInsuficiente;
-import modelos.Cliente;
-import modelos.Cuenta;
-import modelos.CuentaNacional;
-import modelos.Direccion;
+import app.configuracion.Configuracion;
+import app.daos.DAO;
+import app.exceptions.ExceptionCuentaCerrada;
+import app.exceptions.ExceptionCuentaNoExiste;
+import app.exceptions.ExceptionSaldoInsuficiente;
+import app.modelos.Cliente;
+import app.modelos.Cuenta;
+import app.modelos.CuentaNacional;
+import app.modelos.Direccion;
+import app.servicios.ServicioTransferencias;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = Configuracion.class)
@@ -70,9 +72,8 @@ class ServicioTranferenciaImplTest {
 	private Cliente cliente1;
 	private Cliente cliente2;
 	
-	@Test
-	void TransferenciaExitosa() throws ExceptionCuentaCerrada, ExceptionSaldoInsuficiente, ExceptionCuentaNoExiste {
-		
+	@BeforeEach
+	void setup() {
 		direccion = new Direccion(CALLE, NUM, DEPTO, PISO, CIUDAD, CP, PROV);
 		cliente1 = new Cliente(NOMBRE, APELLIDO, direccion, TELEFONO, MAIL);
 		cliente2 = new Cliente(NOMBRE, APELLIDO, direccion, TELEFONO, MAIL);
@@ -89,8 +90,12 @@ class ServicioTranferenciaImplTest {
 
 		assertNotNull(cuenta1.getId());
 		assertNotNull(cuenta2.getId());
+	}
+	
+	
+	@Test
+	void TransferenciaExitosa() throws ExceptionCuentaCerrada, ExceptionSaldoInsuficiente, ExceptionCuentaNoExiste {
 		
-		em.clear();
  		CuentaNacional ctaOrigen = em.find(CuentaNacional.class, cuenta1.getId());
  		CuentaNacional ctaDestino = em.find(CuentaNacional.class, cuenta2.getId());
 		
@@ -100,26 +105,8 @@ class ServicioTranferenciaImplTest {
 	
 	@Test
 	void Transferencia_SaldoInsuficiente() throws ExceptionSaldoInsuficiente{
-			
-		direccion = new Direccion(CALLE, NUM, DEPTO, PISO, CIUDAD, CP, PROV);
-		cliente1 = new Cliente(NOMBRE, APELLIDO, direccion, TELEFONO, MAIL);
-		cliente2 = new Cliente(NOMBRE, APELLIDO, direccion, TELEFONO, MAIL);
-		
-		clienteDao.save(cliente1);
-		clienteDao.save(cliente2);
-		
-		cuenta1 = new CuentaNacional(NUMERO_CTA, FEC_CREACION, SALDO_INICIAL, SALDO_ACTUAL, DESCUBIERTO, cliente1);
-		cuenta2 = new CuentaNacional(NUMERO_CTA, FEC_CREACION, SALDO_INICIAL, SALDO_ACTUAL, DESCUBIERTO, cliente2);
-		
-		cuentaDao.save(cuenta1);
-		cuentaDao.save(cuenta2);
-		em.flush();
 
-		assertNotNull(cuenta1.getId());
-		assertNotNull(cuenta2.getId());
-		
-		em.clear();
- 		CuentaNacional ctaOrigen = em.find(CuentaNacional.class, cuenta1.getId());
+		CuentaNacional ctaOrigen = em.find(CuentaNacional.class, cuenta1.getId());
  		CuentaNacional ctaDestino = em.find(CuentaNacional.class, cuenta2.getId());
 		
 	 	assertThrows(ExceptionSaldoInsuficiente.class, () -> {

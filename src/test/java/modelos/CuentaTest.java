@@ -1,6 +1,7 @@
 package modelos;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 
 import java.time.LocalDate;
@@ -12,8 +13,16 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import app.modelos.Cliente;
+import app.modelos.CompraVentaMoneda;
+import app.modelos.CuentaExtranjera;
+import app.modelos.CuentaNacional;
+import app.modelos.DepositoExtraccion;
+import app.modelos.Movimiento;
+import app.modelos.TransferenciaRecibida;
 
 public class CuentaTest {
 
@@ -40,7 +49,7 @@ public class CuentaTest {
 	private DepositoExtraccion depositoExtraccion;
 	private CompraVentaMoneda compraVentaMoneda;
 	
-	@Before
+	@BeforeEach
 	public void crearCuenta() {
 		
 		titular = mock(Cliente.class);

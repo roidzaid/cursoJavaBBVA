@@ -12,8 +12,14 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
+
+import app.modelos.Cliente;
+import app.modelos.Cuenta;
+import app.modelos.CuentaExtranjera;
+import app.modelos.CuentaNacional;
+import app.modelos.Direccion;
 
 public class ClienteTest {
 
@@ -29,7 +35,7 @@ public class ClienteTest {
 	private CuentaExtranjera cuentaExtranjera;
 	private CuentaNacional cuentaNacional;
 	
-	@Before
+	@BeforeEach
 	public void before() {
 		direccion = mock(Direccion.class);
 		cuentaExtranjera = mock(CuentaExtranjera.class);

@@ -8,19 +8,22 @@ import java.time.LocalDate;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
-import configuracion.Configuracion;
-import daos.DAO;
-import modelos.Cliente;
-import modelos.Cuenta;
-import modelos.CuentaExtranjera;
-import modelos.Direccion;
+import app.configuracion.Configuracion;
+import app.daos.DAO;
+import app.modelos.Cliente;
+import app.modelos.Cuenta;
+import app.modelos.CuentaExtranjera;
+import app.modelos.Direccion;
+import app.servicios.ServicioCuentas;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = Configuracion.class)
@@ -28,9 +31,11 @@ import modelos.Direccion;
 class ServicioCuentasImplTest {
 
 	@Autowired
+	@Qualifier("clientes")
 	private DAO<Cliente> clienteDao;
 	
 	@Autowired
+	@Qualifier("cuentas")
 	private DAO<Cuenta> cuentaDao;
 	
 	@Autowired
@@ -67,11 +72,9 @@ class ServicioCuentasImplTest {
 	
 	private CuentaExtranjera cuentaExtranjera;
 	
-	
-	
-	@Test
-	void AgregarCotitular() {
-		
+
+	@BeforeEach
+	void setup() {
 		direccion = new Direccion(CALLE, NUM, DEPTO, PISO, CIUDAD, CP, PROV);
 		cliente = new Cliente(NOMBRE, APELLIDO, direccion, TELEFONO, MAIL);
 		cuentaExtranjera = new CuentaExtranjera(NUMERO_CTA, FEC_CREACION, SALDO_INICIAL, SALDO_ACTUAL, DESCUBIERTO, cliente, MONEDA);
@@ -82,7 +85,12 @@ class ServicioCuentasImplTest {
 		
 		assertNotNull(cliente.getId());
 		assertNotNull(cuentaExtranjera.getId());
-		
+	}
+	
+	
+	
+	@Test
+	void AgregarCotitular() {
 		
 		em.clear();
  		Cliente c = em.find(Cliente.class, cliente.getId());
