@@ -12,7 +12,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,11 +30,9 @@ import app.servicios.ServicioCuentas;
 class ServicioCuentasImplTest {
 
 	@Autowired
-	@Qualifier("clientes")
 	private DAO<Cliente> clienteDao;
 	
 	@Autowired
-	@Qualifier("cuentas")
 	private DAO<Cuenta> cuentaDao;
 	
 	@Autowired

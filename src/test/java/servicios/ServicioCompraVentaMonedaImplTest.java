@@ -121,7 +121,7 @@ class ServicioCompraVentaMonedaImplTest {
 
 		//Validamos el saldo actual de la cuanta extranjera luego de la operacion
 		Cuenta ce = em.find(Cuenta.class, cuentaExtranjera.getId());
-		assertEquals(cuentaExtranjera.getSaldoActual() + conversion.getResult(), ce.getSaldoActual());
+		assertEquals(SALDO_ACTUAL + conversion.getResult(), ce.getSaldoActual());
 		
 		//Validamos que el movimiento se encuentra en la tabla de movimientos con el monto correcto para cuenta extranjera
 		assertEquals(conversion.getResult(), ce.getMovimientos().get(0).getMonto());

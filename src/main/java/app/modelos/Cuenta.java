@@ -14,6 +14,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import app.exceptions.ExceptionCuentaCerrada;
 import app.exceptions.ExceptionSaldoInsuficiente;
 import lombok.Getter;
@@ -50,9 +52,11 @@ public abstract class Cuenta{
 	@Column(name="fecha_cierre")
 	private LocalDate fechaCierre;
 	
+	@JsonIgnore
 	@ManyToOne
 	private Cliente titular;
 	
+	@JsonIgnore
 	@ManyToMany
 	private List<Cliente> coTitulares = new ArrayList<>();
 	
